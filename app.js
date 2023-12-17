@@ -13,18 +13,34 @@ const CHOICES = [
   },
 ];
 
-const choiceButtons = document.querySelectorAll(".choice-btn");
+//game section variables
 const gameDiv = document.querySelector(".game");
-const resultsDiv = document.querySelector(".results");
-const resultDivs = document.querySelectorAll(".results__result");
+const headerDiv = document.querySelector(".header");
+const choiceButtons = document.querySelectorAll(".choice-btn");
 
-const resultWinner = document.querySelector(".results__winner");
-const resultText = document.querySelector(".results__text");
-
-const playAgainBtn = document.querySelector(".play-again");
-
+//score board variables
 const userScoreNumber = document.querySelector(".user__score__number");
 const compScoreNumber = document.querySelector(".comp__score__number");
+
+//results section variables
+const resultsDiv = document.querySelector(".results");
+const resultDivs = document.querySelectorAll(".results-result");
+const resultWinner = document.querySelector(".results-winner");
+const resultText = document.querySelector(".results-text");
+const playAgainBtn = document.querySelector(".play-again-btn");
+const replayBtn = document.querySelector(".replay-btn");
+
+//rules section variables
+const btnRules = document.querySelector(".rules-btn");
+const rulesSection = document.querySelector(".rules-section");
+const btnClose = document.querySelector(".close-btn");
+
+//next button variable
+const nextBtn = document.querySelector(".next-btn");
+
+//hurray section variables
+const hurraySection = document.querySelector(".hurray-section");
+const backToGame = document.querySelector(".back-to-game");
 
 //local storage created for storing the score. No reset even after reloading page
 let userScore = parseInt(localStorage.getItem("userScore")) || 0;
@@ -43,6 +59,18 @@ choiceButtons.forEach((button) => {
   });
 });
 
+//Hurray Page Functions
+function showHurrayPage() {
+  gameDiv.classList.add("hidden");
+  hurraySection.classList.remove("hidden");
+}
+
+function hideHurrayPage() {
+  gameDiv.classList.toggle("hidden");
+  hurraySection.classList.add("hidden");
+}
+
+//game functions
 function choose(choice) {
   const compchoice = compChoose();
   displayResults([choice, compchoice]);
@@ -79,15 +107,18 @@ function displayWinner(results) {
         "you win <br /> <span class='small-text'> against pc</span>";
       resultDivs[0].classList.toggle("winner");
       keepUserScore(1);
-      console.log("userwins");
+      console.log("User Wins");
     } else if (compWins) {
       resultText.innerHTML =
         "you lose <br /> <span class='small-text'> against pc</span>";
       resultDivs[1].classList.toggle("winner");
       keepCompScore(1);
-      console.log("compWins");
+      console.log("PC Wins");
     } else {
       resultText.innerHTML = "tie up";
+      replayBtn.style.display = "block";
+      playAgainBtn.style.display = "none";
+      console.log("Tie up");
     }
     resultWinner.classList.toggle("hidden");
     resultsDiv.classList.toggle("show-winner");
@@ -102,18 +133,76 @@ function keepUserScore(point) {
   userScore += point;
   userScoreNumber.innerText = userScore;
   localStorage.setItem("userScore", userScore);
+  nextBtn.style.display = "block";
+  replayBtn.style.display = "none";
+  playAgainBtn.style.display = "block";
 }
 
 function keepCompScore(point) {
   compScore += point;
   compScoreNumber.innerText = compScore;
   localStorage.setItem("compScore", compScore);
+  replayBtn.style.display = "none";
+  playAgainBtn.style.display = "block";
 }
 
 // Play Again
 playAgainBtn.addEventListener("click", () => {
   gameDiv.classList.toggle("hidden");
   resultsDiv.classList.toggle("hidden");
+
+  resultDivs.forEach((resultDiv) => {
+    resultDiv.innerHTML = "";
+    resultDiv.classList.remove("winner");
+    nextBtn.style.display = "none";
+  });
+
+  resultText.innerText = "";
+  resultWinner.classList.toggle("hidden");
+  resultsDiv.classList.toggle("show-winner");
+});
+
+//replay button only appears if "Tie Up!"
+replayBtn.addEventListener("click", () => {
+  gameDiv.classList.toggle("hidden");
+  resultsDiv.classList.toggle("hidden");
+
+  resultDivs.forEach((resultDiv) => {
+    resultDiv.innerHTML = "";
+    resultDiv.classList.remove("winner");
+  });
+
+  resultText.innerText = "";
+  resultWinner.classList.toggle("hidden");
+  resultsDiv.classList.toggle("show-winner");
+});
+
+// Show/Hide Rules
+btnRules.addEventListener("click", () => {
+  rulesSection.classList.toggle("open");
+});
+btnClose.addEventListener("click", () => {
+  rulesSection.classList.toggle("open");
+});
+
+//next btn take you to the hurray page when user wins
+nextBtn.addEventListener("click", () => {
+  gameDiv.classList.toggle("hidden");
+  resultsDiv.classList.toggle("hidden");
+  headerDiv.classList.add("hidden");
+  nextBtn.style.display = "none";
+
+  showHurrayPage();
+});
+
+//on hurray page backToGame btn for back to the main game screen
+backToGame.addEventListener("click", () => {
+  hideHurrayPage();
+
+  gameDiv.classList.remove("hidden");
+  resultsDiv.classList.add("hidden");
+  headerDiv.classList.remove("hidden");
+  nextBtn.style.display = "none";
 
   resultDivs.forEach((resultDiv) => {
     resultDiv.innerHTML = "";
