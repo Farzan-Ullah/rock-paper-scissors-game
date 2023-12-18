@@ -5,8 +5,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="styles.css" />
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script> -->
   <title>Rock | Paper | Scissors</title>
 </head>
 
@@ -23,6 +21,8 @@
         <div class="user__score__number">0</div>
       </div>
     </header>
+
+
     <section class="game">
       <button class="choice-btn" data-choice="rock">
         <div class="choice rock">
@@ -55,9 +55,19 @@
   </section>
 
   <section class="hurray-section hidden">
-    <h2>Hurray!!</h2> <br>
-    <p>You Won The Game</p> <br>
-    <button class="back-to-game">Play Again</button>
+    <div class="hurray-images">
+      <div class="stars-image">
+        <img src="./images/stars.png" alt="" />
+      </div>
+      <div class="trophy-image">
+        <img src="./images/trophy.png" alt="" />
+      </div>
+    </div>
+    <div class="hurray-message-section">
+      <h2>Hurray!!</h2> <br>
+      <p>You Won The Game</p> <br>
+      <button class="back-to-game">Play Again</button>
+    </div>
   </section>
 
   <div class="rules-section">
@@ -88,7 +98,7 @@
     <button class="next-btn">Next</button>
   </div>
 
-  <script src="app.js" defer></script>
+  <script src="script.js" defer></script>
 </body>
 
 </html>
