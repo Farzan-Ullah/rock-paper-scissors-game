@@ -83,14 +83,14 @@ function compChoose() {
 }
 
 function displayResults(results) {
-  resultDivs.forEach((resultDiv, idx) => {
+  resultDivs.forEach((resultDiv, index) => {
     setTimeout(() => {
       resultDiv.innerHTML = `
-        <div class="choice ${results[idx].name}">
-          <img src="images/${results[idx].name}.png" alt="${results[idx].name}" />
+        <div class="choice ${results[index].name}">
+          <img src="images/${results[index].name}.png" alt="${results[index].name}" />
         </div>
       `;
-    }, idx * 1000);
+    }, index * 1000);
   });
 
   gameDiv.classList.toggle("hidden");
